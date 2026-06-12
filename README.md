@@ -76,6 +76,7 @@ The upstream encoders are specified in `model/config.json` in the model repo:
 ## Notes
 
 - Input audio is converted to mono and resampled to 16 kHz.
+- WAV input is recommended. PCM WAV files are supported even when torchaudio has no optional audio backend installed.
 - By default, audio is truncated to 12 seconds, matching the training feature extraction setting.
 - The score estimates the quality of the marked NV event, not the overall utterance quality.
 - SPEAR uses Hugging Face remote code, so the pipeline loads it with `trust_remote_code=True`.
