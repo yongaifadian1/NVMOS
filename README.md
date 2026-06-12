@@ -1,4 +1,13 @@
-# NVMOS
+# NVMOS: Non-Verbal Vocalization Quality Assessment in Speech
+
+<p>
+  <a href="https://huggingface.co/maimai11/NVMOS"><img src="https://img.shields.io/badge/Hugging%20Face-NVMOS-yellow" alt="Hugging Face"></a>
+  <a href="https://yongaifadian1.github.io/NVMOS/"><img src="https://img.shields.io/badge/Demo-Page-green" alt="Demo Page"></a>
+  <a href="#english"><img src="https://img.shields.io/badge/Language-English-blue" alt="English"></a>
+  <a href="#chinese"><img src="https://img.shields.io/badge/Language-%E4%B8%AD%E6%96%87-red" alt="中文"></a>
+</p>
+
+<a id="english"></a>
 
 NVMOS predicts the perceptual quality of a target non-verbal vocalization (NV) in speech. The input is an audio file and its text containing one explicit NV tag such as `[laugh]`, `[sigh]`, or `[cough]`. The output is a MOS-like quality score in the range 0-5 for the marked NV event.
 
@@ -82,30 +91,10 @@ Example output:
 }
 ```
 
-## Downloading Model Files Manually
-
-The default command downloads all required files automatically. To pre-download only the NVMOS scorer files:
-
-```bash
-python - <<'PY'
-from huggingface_hub import snapshot_download
-snapshot_download("maimai11/NVMOS")
-PY
-```
-
-The upstream encoders are specified in `model/config.json` in the model repo:
-
-- `marcoyang/spear-large-speech-audio`
-- `FacebookAI/xlm-roberta-large`
-
 ## Notes
 
 - By default, audio is truncated to 12 seconds, matching the training feature extraction setting.
 - The score estimates the quality of the marked NV event, not the overall utterance quality.
-
-## Demo Page
-
-A small test-set demo page is available under `docs/index.html` and can be served by GitHub Pages.
 
 ## Citation
 
@@ -113,7 +102,15 @@ If you use NVMOS, please cite the corresponding paper and model release.
 
 ---
 
+<a id="chinese"></a>
+
 # NVMOS 中文说明
+
+<p>
+  <a href="#english"><img src="https://img.shields.io/badge/Language-English-blue" alt="English"></a>
+  <a href="https://huggingface.co/maimai11/NVMOS"><img src="https://img.shields.io/badge/Hugging%20Face-NVMOS-yellow" alt="Hugging Face"></a>
+  <a href="https://yongaifadian1.github.io/NVMOS/"><img src="https://img.shields.io/badge/Demo-%E9%A1%B5%E9%9D%A2-green" alt="Demo 页面"></a>
+</p>
 
 NVMOS 用于预测语音中目标非语言发声事件（non-verbal vocalization, NV）的感知质量。输入是一段音频及其对应文本，文本中需要包含一个显式 NV 标签，例如 `[laugh]`、`[sigh]` 或 `[cough]`。输出是针对该标记 NV 事件的 0-5 分 MOS 风格质量分数。
 
@@ -196,22 +193,6 @@ python infer.py \
   "attention_peak_frame": 137
 }
 ```
-
-## 手动下载模型文件
-
-默认推理命令会自动下载所需文件。如果只想提前下载 NVMOS 评分器文件：
-
-```bash
-python - <<'PY'
-from huggingface_hub import snapshot_download
-snapshot_download("maimai11/NVMOS")
-PY
-```
-
-上游编码器在 `model/config.json` 中指定：
-
-- `marcoyang/spear-large-speech-audio`
-- `FacebookAI/xlm-roberta-large`
 
 ## 注意事项
 
