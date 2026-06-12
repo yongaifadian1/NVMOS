@@ -2,9 +2,11 @@ from __future__ import annotations
 
 import json
 import re
+import wave
 from pathlib import Path
 from typing import Any
 
+import numpy as np
 import torch
 import torchaudio
 from huggingface_hub import hf_hub_download
@@ -72,7 +74,13 @@ class NVMOSPipeline:
         self.scorer.load_state_dict(state)
 
     def load_audio(self, audio_path: str | Path) -> torch.Tensor:
-        wav, sr = torchaudio.load(str(audio_path))
+        audio_path = Path(audio_path)
+        try:
+            wav, sr = torchaudio.load(str(audio_path))
+        except RuntimeError:
+            if audio_path.suffix.lower() != ".wav":
+                raise
+            wav, sr = self._load_pcm_wav(audio_path)
         wav = wav.mean(dim=0)
         target_sr = int(self.config.get("sample_rate", 16000))
         if sr != target_sr:
@@ -81,6 +89,25 @@ class NVMOSPipeline:
         if max_audio_sec > 0:
             wav = wav[: int(max_audio_sec * target_sr)]
         return wav
+
+    @staticmethod
+    def _load_pcm_wav(audio_path: Path) -> tuple[torch.Tensor, int]:
+        with wave.open(str(audio_path), "rb") as wav_file:
+            channels = wav_file.getnchannels()
+            sample_width = wav_file.getsampwidth()
+            sr = wav_file.getframerate()
+            frames = wav_file.readframes(wav_file.getnframes())
+        if sample_width == 1:
+            data = np.frombuffer(frames, dtype=np.uint8).astype(np.float32)
+            data = (data - 128.0) / 128.0
+        elif sample_width == 2:
+            data = np.frombuffer(frames, dtype="<i2").astype(np.float32) / 32768.0
+        elif sample_width == 4:
+            data = np.frombuffer(frames, dtype="<i4").astype(np.float32) / 2147483648.0
+        else:
+            raise RuntimeError(f"Unsupported PCM WAV sample width: {sample_width} bytes")
+        wav = torch.from_numpy(data.reshape(-1, channels).T.copy())
+        return wav, sr
 
     @torch.no_grad()
     def extract_audio_features(self, audio_path: str | Path) -> tuple[torch.Tensor, torch.Tensor]:
