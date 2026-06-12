@@ -11,7 +11,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Predict the quality score of a marked NV event in speech.")
     parser.add_argument("--audio", required=True, help="Path to an input audio file.")
     parser.add_argument("--text", required=True, help="Text containing the target NV tag, e.g. 'I am fine. [laugh]'.")
-    parser.add_argument("--tag", default=None, help="Optional target tag without brackets. If omitted, inferred from text.")
+    parser.add_argument("--tag", default=None, help="Optional consistency check for the single bracketed tag in text.")
     parser.add_argument("--model-id", default="maimai11/NVMOS", help="Hugging Face repo containing NVMOS config and scorer weights.")
     parser.add_argument("--device", default=None, help="cuda, cpu, or leave unset for auto.")
     parser.add_argument("--audio-encoder", default=None, help="Override SPEAR model id/path.")
