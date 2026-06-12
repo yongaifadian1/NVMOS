@@ -29,7 +29,7 @@ Install a PyTorch build matching your machine if the default wheel is not suitab
 
 ## Inference
 
-Run prediction with an audio file and the corresponding text containing the NV tag:
+Run prediction with an audio file and the corresponding text containing exactly one NV tag at its actual position:
 
 ```bash
 python infer.py \
@@ -51,10 +51,10 @@ Example output:
 }
 ```
 
-If the text does not contain a bracketed tag, pass the target tag explicitly. The pipeline will append `[tag]` for query extraction:
+The target NV tag must appear in the text at its actual position. NVMOS does not append a missing tag because the tag position is part of the text-query input used by the model. Text with zero or multiple bracketed tags is rejected. The optional `--tag` argument only checks that the single text tag matches the expected target:
 
 ```bash
-python infer.py --audio /path/to/audio.wav --text "That was unexpected." --tag laugh
+python infer.py --audio /path/to/audio.wav --text "That was unexpected. [laugh]" --tag laugh
 ```
 
 ## Downloading Model Files Manually
