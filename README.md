@@ -61,8 +61,8 @@ First run the two provided examples to verify the environment and model download
 
 ```bash
 python infer.py \
-  --audio examples/example_low_cough_pred0.63.mp3 \
-  --text "$(cat examples/example_low_cough_pred0.63.txt)"
+  --audio examples/example_low_sigh_pred0.10.wav \
+  --text "$(cat examples/example_low_sigh_pred0.10.txt)"
 
 python infer.py \
   --audio examples/example_high_cough_pred4.15.wav \
@@ -164,8 +164,8 @@ pip install -r requirements.txt
 
 ```bash
 python infer.py \
-  --audio examples/example_low_cough_pred0.63.mp3 \
-  --text "$(cat examples/example_low_cough_pred0.63.txt)"
+  --audio examples/example_low_sigh_pred0.10.wav \
+  --text "$(cat examples/example_low_sigh_pred0.10.txt)"
 
 python infer.py \
   --audio examples/example_high_cough_pred4.15.wav \
