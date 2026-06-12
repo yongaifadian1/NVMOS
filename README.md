@@ -1,6 +1,8 @@
 # NVMOS
 
-NVMOS predicts the perceptual quality of a target non-verbal vocalization (NV) in speech. The input is an audio file and its text containing an explicit NV tag such as `[laugh]`, `[sigh]`, or `[cough]`. The output is a MOS-like quality score in the range 0-5 for the marked NV event.
+[English](README.md) | [中文](README_zh.md)
+
+NVMOS predicts the perceptual quality of a target non-verbal vocalization (NV) in speech. The input is an audio file and its text containing one explicit NV tag such as `[laugh]`, `[sigh]`, or `[cough]`. The output is a MOS-like quality score in the range 0-5 for the marked NV event.
 
 This repository contains inference code for the released SPEAR-L9 NVMOS model. The scorer weights are hosted on Hugging Face at [`maimai11/NVMOS`](https://huggingface.co/maimai11/NVMOS).
 
@@ -12,20 +14,18 @@ The released inference pipeline uses:
 - text query representation: XLM-R Large hidden states averaged over the target tag span inside `[tag]`
 - downstream scorer: 2-layer, 8-head text-query cross-attention with a regression head
 
-The audio and text encoders are downloaded automatically from Hugging Face on first use. The small NVMOS scorer checkpoint is downloaded from `maimai11/NVMOS`.
+The audio and text encoders are downloaded automatically from Hugging Face on first use. The NVMOS scorer checkpoint is downloaded from `maimai11/NVMOS`.
 
 ## Installation
 
-Create a clean Python environment. Python 3.10 or newer is recommended.
+Create a clean conda environment:
 
 ```bash
-python -m venv .venv
-source .venv/bin/activate
+conda create -n nvmos python=3.10 -y
+conda activate nvmos
 pip install --upgrade pip
 pip install -r requirements.txt
 ```
-
-Install a PyTorch build matching your machine if the default wheel is not suitable. For example, CUDA users can follow the command from the official PyTorch selector.
 
 ## Inference
 
@@ -51,12 +51,6 @@ Example output:
 }
 ```
 
-The target NV tag must appear in the text at its actual position. NVMOS does not append a missing tag because the tag position is part of the text-query input used by the model. Text with zero or multiple bracketed tags is rejected. The optional `--tag` argument only checks that the single text tag matches the expected target:
-
-```bash
-python infer.py --audio /path/to/audio.wav --text "That was unexpected. [laugh]" --tag laugh
-```
-
 ## Downloading Model Files Manually
 
 The default command downloads all required files automatically. To pre-download only the NVMOS scorer files:
@@ -75,11 +69,8 @@ The upstream encoders are specified in `model/config.json` in the model repo:
 
 ## Notes
 
-- Input audio is converted to mono and resampled to 16 kHz.
-- WAV input is recommended. PCM WAV files are supported even when torchaudio has no optional audio backend installed.
 - By default, audio is truncated to 12 seconds, matching the training feature extraction setting.
 - The score estimates the quality of the marked NV event, not the overall utterance quality.
-- SPEAR uses Hugging Face remote code, so the pipeline loads it with `trust_remote_code=True`.
 
 ## Citation
 
