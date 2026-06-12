@@ -1,0 +1,68 @@
+{
+  "args": {
+    "features": "analysis_outputs/nvmos_precomputed_wavlm_spear_all_layers_seq_20260603/audio_spear_l9_none.pt",
+    "text_features": "analysis_outputs/nvmos_precomputed_wavlm_spear_all_layers_seq_20260603/text_xlmr_large_tagctx.pt",
+    "query_mode": "tag_ctx",
+    "score_xlsx": "docs/nvmos/expert_score/final/LI_scoring_sheet_6_12.xlsx",
+    "mapping_jsonl": "docs/nvmos/audio_by_nv_for_eval_numbered_mapping.jsonl",
+    "manifest_json": "analysis_outputs/nvmos_precomputed_wavlm_spear_all_layers_seq_20260603/manifest.json",
+    "output_dir": "analysis_outputs/nvmos_multinv_li612_textquery_wavlm_spear_all_layers_e10_20260613/spear_l9",
+    "epochs": 10,
+    "batch_size": 8,
+    "lr": 0.0001,
+    "weight_decay": 0.01,
+    "hidden_dim": 256,
+    "cross_layers": 2,
+    "attention_heads": 8,
+    "ffn_dim": 1024,
+    "dropout": 0.1,
+    "grad_clip": 1.0,
+    "num_workers": 0,
+    "seed": 1234,
+    "device": "cuda"
+  },
+  "align_summary": {
+    "score_rows": 7784,
+    "aligned_rows": 7784,
+    "missing_mapping_rows": 0,
+    "missing_manifest_rows": 0,
+    "tag_mismatch_rows": 0,
+    "text_mismatch_rows": 1,
+    "split_counts": {
+      "valid": 389,
+      "train": 7006,
+      "test": 389
+    },
+    "tag_counts": {
+      "ahem": 594,
+      "chuckle": 275,
+      "cough": 684,
+      "cry": 594,
+      "exhale": 215,
+      "hiss": 549,
+      "hum": 549,
+      "inhale": 220,
+      "laugh": 684,
+      "moan": 542,
+      "pant": 594,
+      "sigh": 594,
+      "smack": 504,
+      "sneeze": 437,
+      "sniffle": 594,
+      "snore": 155
+    }
+  },
+  "sizes": {
+    "train": 7006,
+    "valid": 389,
+    "test": 389
+  },
+  "dropped": {
+    "train": 0,
+    "valid": 0,
+    "test": 0
+  },
+  "audio_dim": 1024,
+  "text_dim": 1024,
+  "trainable_params": 2172929
+}
