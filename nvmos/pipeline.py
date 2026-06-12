@@ -15,26 +15,17 @@ from transformers import AutoModel, AutoTokenizer
 from .model import TextQueryNVMOS
 
 
-def normalize_nv_tag_text(text: str, tag: str) -> tuple[str, tuple[int, int]]:
-    if not text:
-        text = f"[{tag}]"
-        return text, (1, 1 + len(tag))
-    pattern = re.compile(r"\[" + re.escape(tag) + r"\]", re.IGNORECASE)
-    match = pattern.search(text)
-    if match:
-        return text, (match.start() + 1, match.end() - 1)
-    text = f"{text} [{tag}]"
-    start = len(text) - len(tag) - 1
-    return text, (start, start + len(tag))
-
-
-def infer_tag(text: str, tag: str | None = None) -> str:
-    if tag:
-        return tag.strip().strip("[]")
-    match = re.search(r"\[([^\[\]]+)\]", text)
-    if not match:
-        raise ValueError("No NV tag found. Provide text containing e.g. '[laugh]' or pass --tag laugh.")
-    return match.group(1).strip()
+def parse_single_nv_tag(text: str, tag: str | None = None) -> tuple[str, tuple[int, int]]:
+    matches = list(re.finditer(r"\[([^\[\]]+)\]", text))
+    if not matches:
+        raise ValueError("No bracketed NV tag found. Provide text containing exactly one target tag at its actual position, e.g. '[laugh]'.")
+    if len(matches) > 1:
+        raise ValueError("Multiple bracketed NV tags found. NVMOS inference expects exactly one target tag in the text.")
+    match = matches[0]
+    parsed_tag = match.group(1).strip()
+    if tag and tag.strip().strip("[]").lower() != parsed_tag.lower():
+        raise ValueError(f"Provided tag '{tag}' does not match the single text tag '[{parsed_tag}]'.")
+    return parsed_tag, (match.start() + 1, match.end() - 1)
 
 
 class NVMOSPipeline:
@@ -128,9 +119,9 @@ class NVMOSPipeline:
 
     @torch.no_grad()
     def extract_tag_query(self, text: str, tag: str) -> tuple[torch.Tensor, str]:
-        normalized_text, span = normalize_nv_tag_text(text, tag)
+        _, span = parse_single_nv_tag(text, tag)
         enc = self.tokenizer(
-            normalized_text,
+            text,
             return_tensors="pt",
             truncation=True,
             max_length=int(self.config.get("max_text_len", 192)),
@@ -143,11 +134,11 @@ class NVMOSPipeline:
         idx = torch.tensor(mask, device=self.device, dtype=torch.bool)
         if not idx.any():
             idx[0] = True
-        return hidden[idx].mean(dim=0, keepdim=True).float(), normalized_text
+        return hidden[idx].mean(dim=0, keepdim=True).float(), text
 
     @torch.no_grad()
     def predict(self, audio_path: str | Path, text: str, tag: str | None = None) -> dict[str, Any]:
-        tag = infer_tag(text, tag)
+        tag, _ = parse_single_nv_tag(text, tag)
         frames, key_padding_mask = self.extract_audio_features(audio_path)
         tag_ctx, normalized_text = self.extract_tag_query(text, tag)
         score, attn = self.scorer(frames, tag_ctx, key_padding_mask)
