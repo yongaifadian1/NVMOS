@@ -14,6 +14,27 @@ The released inference pipeline uses:
 
 The audio and text encoders are downloaded automatically from Hugging Face on first use. The NVMOS scorer checkpoint is downloaded from `maimai11/NVMOS`.
 
+## Supported NV Categories
+
+| Category | Tag |
+| --- | --- |
+| Ahem | `[ahem]` |
+| Chuckle | `[chuckle]` |
+| Cough | `[cough]` |
+| Cry | `[cry]` |
+| Exhale | `[exhale]` |
+| Hiss | `[hiss]` |
+| Hum | `[hum]` |
+| Inhale | `[inhale]` |
+| Laugh | `[laugh]` |
+| Moan | `[moan]` |
+| Pant | `[pant]` |
+| Sigh | `[sigh]` |
+| Smack | `[smack]` |
+| Sneeze | `[sneeze]` |
+| Sniffle | `[sniffle]` |
+| Snore | `[snore]` |
+
 ## Installation
 
 Create a clean conda environment:
@@ -91,6 +112,27 @@ NVMOS 用于预测语音中目标非语言发声事件（non-verbal vocalization
 - 下游评分器：2 层、8 头文本查询交叉注意力模块和回归头
 
 首次运行时，音频编码器、文本编码器和 NVMOS 评分器权重会自动从 Hugging Face 下载。
+
+## 支持的 NV 类别
+
+| 类别 | 标签 |
+| --- | --- |
+| 清嗓 / Ahem | `[ahem]` |
+| 轻笑 / Chuckle | `[chuckle]` |
+| 咳嗽 / Cough | `[cough]` |
+| 哭声 / Cry | `[cry]` |
+| 呼气 / Exhale | `[exhale]` |
+| 嘶声 / Hiss | `[hiss]` |
+| 哼声 / Hum | `[hum]` |
+| 吸气 / Inhale | `[inhale]` |
+| 笑声 / Laugh | `[laugh]` |
+| 呻吟 / Moan | `[moan]` |
+| 喘息 / Pant | `[pant]` |
+| 叹气 / Sigh | `[sigh]` |
+| 咂嘴 / Smack | `[smack]` |
+| 喷嚏 / Sneeze | `[sneeze]` |
+| 抽鼻 / Sniffle | `[sniffle]` |
+| 鼾声 / Snore | `[snore]` |
 
 ## 环境安装
 
