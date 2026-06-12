@@ -70,7 +70,7 @@ PY
 
 The upstream encoders are specified in `model/config.json` in the model repo:
 
-- `fnlp/SPEAR-Large-Speech-Audio`
+- `marcoyang/spear-large-speech-audio`
 - `FacebookAI/xlm-roberta-large`
 
 ## Notes
