@@ -2,14 +2,14 @@ from __future__ import annotations
 
 import json
 import re
-import wave
+import struct
 from pathlib import Path
 from typing import Any
 
 import numpy as np
 import torch
 import torchaudio
-from huggingface_hub import hf_hub_download
+from huggingface_hub import hf_hub_download, snapshot_download
 from transformers import AutoModel, AutoTokenizer
 
 from .model import TextQueryNVMOS
@@ -42,14 +42,15 @@ class NVMOSPipeline:
         self.config: dict[str, Any] = json.loads(Path(config_path).read_text(encoding="utf-8"))
         self.audio_encoder_id = audio_encoder or self.config["audio_encoder"]
         self.text_encoder_id = text_encoder or self.config["text_encoder"]
+        text_encoder_source = self._resolve_model_source(self.text_encoder_id, local_files_only)
 
         self.audio_model = AutoModel.from_pretrained(
             self.audio_encoder_id,
             trust_remote_code=True,
             local_files_only=local_files_only,
         ).to(self.device).eval()
-        self.tokenizer = AutoTokenizer.from_pretrained(self.text_encoder_id, local_files_only=local_files_only)
-        self.text_model = AutoModel.from_pretrained(self.text_encoder_id, local_files_only=local_files_only).to(self.device).eval()
+        self.tokenizer = AutoTokenizer.from_pretrained(text_encoder_source, local_files_only=local_files_only)
+        self.text_model = AutoModel.from_pretrained(text_encoder_source, local_files_only=local_files_only).to(self.device).eval()
 
         self.scorer = TextQueryNVMOS(
             audio_dim=int(self.config.get("audio_dim", 1024)),
@@ -61,8 +62,14 @@ class NVMOSPipeline:
             dropout=float(self.config.get("dropout", 0.1)),
         ).to(self.device).eval()
         weight_path = hf_hub_download(model_id, "nvmos_spear_l9.pt", local_files_only=local_files_only)
-        state = torch.load(weight_path, map_location=self.device)
+        state = torch.load(weight_path, map_location=self.device, weights_only=True)
         self.scorer.load_state_dict(state)
+
+    @staticmethod
+    def _resolve_model_source(model_id_or_path: str, local_files_only: bool) -> str:
+        if Path(model_id_or_path).exists() or not local_files_only:
+            return model_id_or_path
+        return snapshot_download(model_id_or_path, local_files_only=True)
 
     def load_audio(self, audio_path: str | Path) -> torch.Tensor:
         audio_path = Path(audio_path)
@@ -83,20 +90,42 @@ class NVMOSPipeline:
 
     @staticmethod
     def _load_pcm_wav(audio_path: Path) -> tuple[torch.Tensor, int]:
-        with wave.open(str(audio_path), "rb") as wav_file:
-            channels = wav_file.getnchannels()
-            sample_width = wav_file.getsampwidth()
-            sr = wav_file.getframerate()
-            frames = wav_file.readframes(wav_file.getnframes())
-        if sample_width == 1:
+        data = audio_path.read_bytes()
+        if data[:4] != b"RIFF" or data[8:12] != b"WAVE":
+            raise RuntimeError(f"Unsupported WAV container: {audio_path}")
+
+        fmt: tuple[int, int, int, int] | None = None
+        frames = None
+        pos = 12
+        while pos + 8 <= len(data):
+            chunk_id = data[pos : pos + 4]
+            chunk_size = struct.unpack_from("<I", data, pos + 4)[0]
+            chunk_start = pos + 8
+            chunk_end = chunk_start + chunk_size
+            if chunk_id == b"fmt ":
+                audio_format, channels, sr, _, _, bits = struct.unpack_from("<HHIIHH", data, chunk_start)
+                fmt = (audio_format, channels, sr, bits)
+            elif chunk_id == b"data":
+                frames = data[chunk_start:chunk_end]
+            pos = chunk_end + (chunk_size % 2)
+
+        if fmt is None or frames is None:
+            raise RuntimeError(f"Malformed WAV file: {audio_path}")
+
+        audio_format, channels, sr, bits = fmt
+        if audio_format == 1 and bits == 8:
             data = np.frombuffer(frames, dtype=np.uint8).astype(np.float32)
             data = (data - 128.0) / 128.0
-        elif sample_width == 2:
+        elif audio_format == 1 and bits == 16:
             data = np.frombuffer(frames, dtype="<i2").astype(np.float32) / 32768.0
-        elif sample_width == 4:
+        elif audio_format == 1 and bits == 32:
             data = np.frombuffer(frames, dtype="<i4").astype(np.float32) / 2147483648.0
+        elif audio_format == 3 and bits == 32:
+            data = np.frombuffer(frames, dtype="<f4").astype(np.float32)
+        elif audio_format == 3 and bits == 64:
+            data = np.frombuffer(frames, dtype="<f8").astype(np.float32)
         else:
-            raise RuntimeError(f"Unsupported PCM WAV sample width: {sample_width} bytes")
+            raise RuntimeError(f"Unsupported WAV format tag={audio_format}, bits={bits}")
         wav = torch.from_numpy(data.reshape(-1, channels).T.copy())
         return wav, sr
 
