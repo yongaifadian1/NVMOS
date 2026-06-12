@@ -48,11 +48,23 @@ pip install -r requirements.txt
 
 ## Inference
 
-Run prediction with an audio file and the corresponding text containing exactly one NV tag at its actual position:
+First run the two provided examples to verify the environment and model download:
 
 ```bash
 python infer.py \
-  --audio /path/to/audio.wav \
+  --audio examples/example_low_cough_pred0.63.mp3 \
+  --text "$(cat examples/example_low_cough_pred0.63.txt)"
+
+python infer.py \
+  --audio examples/example_high_cough_pred4.15.wav \
+  --text "$(cat examples/example_high_cough_pred4.15.txt)"
+```
+
+Then run prediction with your own audio file and the corresponding text. The text must contain exactly one NV tag at its actual position:
+
+```bash
+python infer.py \
+  --audio /path/to/your_audio.wav \
   --text "I tried to explain the situation, but honestly it was just too awkward. [laugh]"
 ```
 
@@ -90,6 +102,10 @@ The upstream encoders are specified in `model/config.json` in the model repo:
 
 - By default, audio is truncated to 12 seconds, matching the training feature extraction setting.
 - The score estimates the quality of the marked NV event, not the overall utterance quality.
+
+## Demo Page
+
+A small test-set demo page is available under `docs/index.html` and can be served by GitHub Pages.
 
 ## Citation
 
@@ -147,11 +163,23 @@ pip install -r requirements.txt
 
 ## 推理
 
-使用音频文件和对应文本进行推理。文本中必须在实际位置包含且只包含一个 NV 标签：
+先运行仓库中提供的两个示例，确认环境和模型下载可以正常工作：
 
 ```bash
 python infer.py \
-  --audio /path/to/audio.wav \
+  --audio examples/example_low_cough_pred0.63.mp3 \
+  --text "$(cat examples/example_low_cough_pred0.63.txt)"
+
+python infer.py \
+  --audio examples/example_high_cough_pred4.15.wav \
+  --text "$(cat examples/example_high_cough_pred4.15.txt)"
+```
+
+然后再替换为自己的音频和对应文本进行评估。文本中必须在实际位置包含且只包含一个 NV 标签：
+
+```bash
+python infer.py \
+  --audio /path/to/your_audio.wav \
   --text "I tried to explain the situation, but honestly it was just too awkward. [laugh]"
 ```
 
@@ -189,6 +217,10 @@ PY
 
 - 默认情况下，音频会被截断为 12 秒，与训练特征提取设置相匹配。
 - 该分数评估的是标记的 NV 事件的质量，而不是整体话语质量。
+
+## Demo 页面
+
+仓库中的 `docs/index.html` 提供了一个 test set 样本展示页，可通过 GitHub Pages 发布。
 
 ## 引用
 
