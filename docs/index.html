@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NVMOS Demo</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #1f2933;
+      --muted: #5f6b7a;
+      --line: #d8dee6;
+      --panel: #ffffff;
+      --band: #f5f7fa;
+      --accent: #1f7a5c;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, "Noto Sans", sans-serif;
+      color: var(--ink);
+      background: var(--band);
+      line-height: 1.5;
+    }
+    header {
+      padding: 36px 24px 24px;
+      background: var(--panel);
+      border-bottom: 1px solid var(--line);
+    }
+    main {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+    h1 {
+      max-width: 1120px;
+      margin: 0 auto 8px;
+      font-size: 32px;
+      letter-spacing: 0;
+    }
+    header p {
+      max-width: 1120px;
+      margin: 0 auto;
+      color: var(--muted);
+    }
+    section {
+      margin: 0 0 28px;
+    }
+    h2 {
+      font-size: 20px;
+      margin: 0 0 12px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 14px;
+    }
+    article {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 16px;
+    }
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 0 0 12px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .pill {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 2px 8px;
+      background: #fafbfc;
+    }
+    .pred {
+      color: var(--accent);
+      font-weight: 650;
+    }
+    audio {
+      width: 100%;
+      margin: 4px 0 12px;
+    }
+    blockquote {
+      margin: 0;
+      padding: 10px 12px;
+      border-left: 3px solid var(--accent);
+      background: #f8faf9;
+      color: #2d3742;
+    }
+    code {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      font-size: 0.95em;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>NVMOS Test-Set Prediction Demo</h1>
+    <p>Representative samples selected from NVMOS predictions on the test set. Each prediction-score range contains two randomly selected examples with the original NV-tagged text.</p>
+  </header>
+  <main>
+    <section>
+      <h2>Prediction score 0-1</h2>
+      <div class="grid">
+        <article>
+          <div class="meta"><span class="pill">Tag: cough</span><span class="pill pred">NVMOS: 0.63</span><span class="pill">Expert MOS: 0.0</span></div>
+          <audio controls preload="none" src="assets/audio/score_0_1_01_cough_pred0.63_mos0.0.mp3"></audio>
+          <blockquote>Think about it and come back if you want. I'll be waiting upstairs in the reception. [cough] Understood</blockquote>
+        </article>
+        <article>
+          <div class="meta"><span class="pill">Tag: sigh</span><span class="pill pred">NVMOS: 0.10</span><span class="pill">Expert MOS: 0.0</span></div>
+          <audio controls preload="none" src="assets/audio/score_0_1_02_sigh_pred0.10_mos0.0.wav"></audio>
+          <blockquote>Another rainy day ruined our plans to go to the beach. [sigh]</blockquote>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2>Prediction score 1-2</h2>
+      <div class="grid">
+        <article>
+          <div class="meta"><span class="pill">Tag: laugh</span><span class="pill pred">NVMOS: 2.00</span><span class="pill">Expert MOS: 0.0</span></div>
+          <audio controls preload="none" src="assets/audio/score_1_2_01_laugh_pred2.00_mos0.0.wav"></audio>
+          <blockquote>We got completely lost in the woods for two hours, [laugh] but at least the weather was nice.</blockquote>
+        </article>
+        <article>
+          <div class="meta"><span class="pill">Tag: inhale</span><span class="pill pred">NVMOS: 1.24</span><span class="pill">Expert MOS: 1.0</span></div>
+          <audio controls preload="none" src="assets/audio/score_1_2_02_inhale_pred1.24_mos1.0.wav"></audio>
+          <blockquote>[inhale] I didn't expect to see you standing right there when I opened the door.</blockquote>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2>Prediction score 2-3</h2>
+      <div class="grid">
+        <article>
+          <div class="meta"><span class="pill">Tag: moan</span><span class="pill pred">NVMOS: 2.06</span><span class="pill">Expert MOS: 3.0</span></div>
+          <audio controls preload="none" src="assets/audio/score_2_3_01_moan_pred2.06_mos3.0.wav"></audio>
+          <blockquote>I shouldn't have drunk so much wine at the party last night. [moan]</blockquote>
+        </article>
+        <article>
+          <div class="meta"><span class="pill">Tag: hum</span><span class="pill pred">NVMOS: 2.92</span><span class="pill">Expert MOS: 3.0</span></div>
+          <audio controls preload="none" src="assets/audio/score_2_3_02_hum_pred2.92_mos3.0.wav"></audio>
+          <blockquote>Organizing the garage took much longer than I initially expected. [hum]</blockquote>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2>Prediction score 3-4</h2>
+      <div class="grid">
+        <article>
+          <div class="meta"><span class="pill">Tag: hiss</span><span class="pill pred">NVMOS: 3.10</span><span class="pill">Expert MOS: 4.0</span></div>
+          <audio controls preload="none" src="assets/audio/score_3_4_01_hiss_pred3.10_mos4.0.wav"></audio>
+          <blockquote>We need to be completely silent so they don't notice us, [hiss]</blockquote>
+        </article>
+        <article>
+          <div class="meta"><span class="pill">Tag: ahem</span><span class="pill pred">NVMOS: 3.66</span><span class="pill">Expert MOS: 3.0</span></div>
+          <audio controls preload="none" src="assets/audio/score_3_4_02_ahem_pred3.66_mos3.0.wav"></audio>
+          <blockquote>To address the elephant in the room, [ahem] yes, the rumors about the merger are true.</blockquote>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2>Prediction score 4-5</h2>
+      <div class="grid">
+        <article>
+          <div class="meta"><span class="pill">Tag: cough</span><span class="pill pred">NVMOS: 4.15</span><span class="pill">Expert MOS: 4.0</span></div>
+          <audio controls preload="none" src="assets/audio/score_4_5_01_cough_pred4.15_mos4.0.wav"></audio>
+          <blockquote>I hate it when the weather changes and makes my chest feel tight [cough]</blockquote>
+        </article>
+        <article>
+          <div class="meta"><span class="pill">Tag: sigh</span><span class="pill pred">NVMOS: 4.01</span><span class="pill">Expert MOS: 5.0</span></div>
+          <audio controls preload="none" src="assets/audio/score_4_5_02_sigh_pred4.01_mos5.0.wav"></audio>
+          <blockquote>[sigh] 我早就跟你说过这样行不通，你偏不听，现在好了吧。</blockquote>
+        </article>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
