@@ -1,0 +1,18 @@
+{
+  "model_type": "nvmos_text_query_scorer",
+  "audio_encoder": "fnlp/SPEAR-Large-Speech-Audio",
+  "audio_layer": 9,
+  "text_encoder": "FacebookAI/xlm-roberta-large",
+  "audio_dim": 1024,
+  "text_dim": 1024,
+  "hidden_dim": 256,
+  "attention_heads": 8,
+  "cross_layers": 2,
+  "ffn_dim": 1024,
+  "dropout": 0.1,
+  "score_range": [0, 5],
+  "sample_rate": 16000,
+  "max_audio_sec": 12.0,
+  "max_text_len": 192,
+  "query_mode": "tag_ctx"
+}
