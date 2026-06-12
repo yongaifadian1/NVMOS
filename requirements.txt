@@ -1,7 +1,7 @@
-torch>=2.1
-torchaudio>=2.1
-transformers>=4.50.1
-huggingface_hub>=0.23
+torch==2.11.0
+torchaudio==2.11.0
+transformers>=4.50.1,<5
+huggingface_hub>=0.23,<1
 safetensors>=0.4
 sentencepiece>=0.2
-numpy>=1.23
+numpy>=1.23,<3
