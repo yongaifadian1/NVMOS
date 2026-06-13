@@ -57,16 +57,16 @@ pip install -r requirements.txt
 
 ## Inference
 
-First run the two provided examples to verify the environment and model download:
+First run the two provided examples to verify the environment and model download. They correspond to representative low- and high-quality NV events from the demo page:
 
 ```bash
 python infer.py \
-  --audio examples/example_low_sigh_pred0.10.wav \
-  --text "$(cat examples/example_low_sigh_pred0.10.txt)"
+  --audio examples/example_low_cry_pred0.82.wav \
+  --text "$(cat examples/example_low_cry_pred0.82.txt)"
 
 python infer.py \
-  --audio examples/example_high_cough_pred4.15.wav \
-  --text "$(cat examples/example_high_cough_pred4.15.txt)"
+  --audio examples/example_high_ahem_pred4.10.mp3 \
+  --text "$(cat examples/example_high_ahem_pred4.10.txt)"
 ```
 
 Then run prediction with your own audio file and the corresponding text. The text must contain exactly one NV tag at its actual position:
@@ -160,16 +160,16 @@ pip install -r requirements.txt
 
 ## 推理
 
-先运行仓库中提供的两个示例，确认环境和模型下载可以正常工作：
+先运行仓库中提供的两个示例，确认环境和模型下载可以正常工作。这两个示例对应 demo 页面中的低质量和高质量 NV 事件：
 
 ```bash
 python infer.py \
-  --audio examples/example_low_sigh_pred0.10.wav \
-  --text "$(cat examples/example_low_sigh_pred0.10.txt)"
+  --audio examples/example_low_cry_pred0.82.wav \
+  --text "$(cat examples/example_low_cry_pred0.82.txt)"
 
 python infer.py \
-  --audio examples/example_high_cough_pred4.15.wav \
-  --text "$(cat examples/example_high_cough_pred4.15.txt)"
+  --audio examples/example_high_ahem_pred4.10.mp3 \
+  --text "$(cat examples/example_high_ahem_pred4.10.txt)"
 ```
 
 然后再替换为自己的音频和对应文本进行评估。文本中必须在实际位置包含且只包含一个 NV 标签：
