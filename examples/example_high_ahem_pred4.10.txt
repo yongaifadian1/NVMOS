@@ -1,0 +1,1 @@
+So, [ahem] if I integrate from t to t plus cap t, I think there is a bracket missing here
