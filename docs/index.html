@@ -13,6 +13,7 @@
       --panel: #ffffff;
       --band: #f5f7fa;
       --accent: #1f7a5c;
+      --soft: #eef6f2;
     }
     * { box-sizing: border-box; }
     body {
@@ -20,112 +21,224 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, "Noto Sans", sans-serif;
       color: var(--ink);
       background: var(--band);
-      line-height: 1.5;
+      line-height: 1.55;
     }
     header {
-      padding: 36px 24px 24px;
+      padding: 40px 24px 28px;
       background: var(--panel);
       border-bottom: 1px solid var(--line);
     }
-    main {
-      max-width: 1120px;
-      margin: 0 auto;
-      padding: 24px;
-    }
     h1 {
-      max-width: 1120px;
-      margin: 0 auto 8px;
+      max-width: 1080px;
+      margin: 0 auto 14px;
       font-size: 32px;
       letter-spacing: 0;
     }
-    section { margin: 0 0 28px; }
-    h2 { font-size: 20px; margin: 0 0 12px; }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 14px;
+    .summary {
+      max-width: 1080px;
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: 16px;
+    }
+    main {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 30px 24px 42px;
+    }
+    .samples {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
     }
     article {
       background: var(--panel);
       border: 1px solid var(--line);
       border-radius: 8px;
-      padding: 16px;
+      padding: 28px;
     }
-    .meta {
+    .expert-row {
       display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin: 0 0 12px;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 22px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--line);
+    }
+    .expert-score {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--ink);
+    }
+    .tag {
       color: var(--muted);
-      font-size: 14px;
+      font-size: 15px;
     }
-    .pill {
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      padding: 2px 8px;
-      background: #fafbfc;
+    audio {
+      width: 100%;
+      margin: 0 0 18px;
     }
-    .pred { color: var(--accent); font-weight: 650; }
-    audio { width: 100%; margin: 4px 0 12px; }
     blockquote {
-      margin: 0;
-      padding: 10px 12px;
-      border-left: 3px solid var(--accent);
+      margin: 0 0 24px;
+      padding: 14px 16px;
+      border-left: 4px solid var(--accent);
       background: #f8faf9;
       color: #2d3742;
+      font-size: 16px;
+    }
+    .score-block {
+      margin: 0 0 22px;
+      padding: 16px 18px;
+      border-radius: 8px;
+      background: var(--soft);
+      border: 1px solid #cfe5da;
+    }
+    .score-label {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+    .nvmos-score {
+      color: var(--accent);
+      font-size: 24px;
+      font-weight: 700;
+    }
+    .judge-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
     }
     .judge {
-      margin: 10px 0 0;
-      padding: 10px 12px;
+      padding: 16px 18px;
       border: 1px solid var(--line);
       border-radius: 8px;
       background: #fbfcfd;
-      font-size: 14px;
     }
-    .judge strong {
-      display: block;
-      margin-bottom: 4px;
-      color: var(--ink);
+    .judge-title {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+    .judge-score {
+      color: var(--accent);
+      font-size: 20px;
+    }
+    .reason {
+      margin: 0;
+      color: #384454;
+      font-size: 15px;
+    }
+    @media (max-width: 760px) {
+      header { padding: 30px 18px 22px; }
+      main { padding: 22px 18px 34px; }
+      article { padding: 20px; }
+      .expert-row { display: block; }
+      .expert-score { margin-bottom: 6px; }
+      .judge-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
   <header>
     <h1>NVMOS Test-Set Prediction Demo</h1>
+    <p class="summary">Gemini 2.5 Pro achieved the best performance among the evaluated LLM judges, but it still makes clear mistakes compared with expert ratings. Qwen3-Omni tends to assign high scores to nearly all samples, including low-quality NV events.</p>
   </header>
   <main>
-    <section>
-      <h2>NVMOS and LLM Judge Comparison</h2>
-      <div class="grid">
-        <article>
-          <div class="meta"><span class="pill">Tag: cry</span><span class="pill pred">NVMOS: 0.82</span><span class="pill">Expert MOS: 1.0</span><span class="pill">Gemini 2.5 Pro: 5</span><span class="pill">Qwen3-Omni: 5</span></div>
-          <audio controls preload="none" src="assets/audio/0_1_01_pred0.82_gem5_mos1.0_gain3.82_cry.wav"></audio>
-          <blockquote>这个玩偶坏了 [cry] 那是奶奶留给我的</blockquote>
-          <div class="judge"><strong>Gemini 2.5 Pro reason</strong>抽泣声非常自然、真实，恰到好处地表达了伤心的情绪，且与前后语音衔接流畅，极大地增强了话语的感染力。</div>
-          <div class="judge"><strong>Qwen3-Omni reason</strong>The crying sound is very natural and expressive, effectively conveying sadness and enhancing the emotional weight of the sentence. It is well-timed and integrated into the speech, sounding authentic and not synthetic.</div>
-        </article>
-        <article>
-          <div class="meta"><span class="pill">Tag: moan</span><span class="pill pred">NVMOS: 0.59</span><span class="pill">Expert MOS: 0.0</span><span class="pill">Gemini 2.5 Pro: 3</span><span class="pill">Qwen3-Omni: 5</span></div>
-          <audio controls preload="none" src="assets/audio/0_1_02_pred0.59_gem3_mos0.0_gain2.41_moan.wav"></audio>
-          <blockquote>[moan] Why does this bed have to be so unbelievably comfortable?</blockquote>
-          <div class="judge"><strong>Gemini 2.5 Pro reason</strong>听到了呻吟声，但声音有些单薄，带有合成感，表现力一般，但基本融入了后续的语音。</div>
-          <div class="judge"><strong>Qwen3-Omni reason</strong>The moan is very natural and expressive, sounding like a genuine vocalization of pleasure or relaxation. It is perfectly timed and fits the context of the spoken sentence, enhancing the overall performance.</div>
-        </article>
-        <article>
-          <div class="meta"><span class="pill">Tag: ahem</span><span class="pill pred">NVMOS: 4.10</span><span class="pill">Expert MOS: 5.0</span><span class="pill">Gemini 2.5 Pro: 2</span><span class="pill">Qwen3-Omni: 4</span></div>
-          <audio controls preload="none" src="assets/audio/mos5_01_pred4.10_gem2_gain2.10_ahem.mp3"></audio>
-          <blockquote>So, [ahem] if I integrate from t to t plus cap t, I think there is a bracket missing here</blockquote>
-          <div class="judge"><strong>Gemini 2.5 Pro reason</strong>听到了清嗓声，但声音听起来很僵硬，有明显的合成感和机械感，听起来不像是自然的人声发声，与前后语音的衔接也不够流畅。</div>
-          <div class="judge"><strong>Qwen3-Omni reason</strong>The 'ahem' sound is natural and expressive, fitting well with the context of a speaker preparing to continue a technical explanation. It enhances the realism of the performance without sounding forced or overly synthetic.</div>
-        </article>
-        <article>
-          <div class="meta"><span class="pill">Tag: smack</span><span class="pill pred">NVMOS: 3.87</span><span class="pill">Expert MOS: 4.0</span><span class="pill">Gemini 2.5 Pro: 1</span><span class="pill">Qwen3-Omni: 5</span></div>
-          <audio controls preload="none" src="assets/audio/mos4_02_pred3.87_gem1_gain2.87_smack.mp3"></audio>
-          <blockquote>You're probably thinking I'm mad. [smack] But you're right, I am mad</blockquote>
-          <div class="judge"><strong>Gemini 2.5 Pro reason</strong>听到的咂嘴声非常不自然，听起来像一个尖锐、短暂的爆破音或音频故障，与前后语音的衔接很突兀，破坏了整体听感。</div>
-          <div class="judge"><strong>Qwen3-Omni reason</strong>The [smack] sound is very natural, crisp, and expressive. It enhances the emotional delivery of the line, fitting perfectly with the speaker's tone and the context of being 'mad'. The sound is well-integrated and adds a strong, believable non-verbal cue.</div>
-        </article>
-      </div>
+    <section class="samples" aria-label="NVMOS and LLM judge comparison samples">
+      <article>
+        <div class="expert-row">
+          <div class="expert-score">Expert MOS: 1.0</div>
+          <div class="tag">Target NV: [cry]</div>
+        </div>
+        <audio controls preload="none" src="assets/audio/0_1_01_pred0.82_gem5_mos1.0_gain3.82_cry.wav"></audio>
+        <blockquote>这个玩偶坏了 [cry] 那是奶奶留给我的</blockquote>
+        <div class="score-block">
+          <div class="score-label">NVMOS prediction</div>
+          <div class="nvmos-score">0.82</div>
+        </div>
+        <div class="judge-grid">
+          <div class="judge">
+            <div class="judge-title"><span>Gemini 2.5 Pro</span><span class="judge-score">5</span></div>
+            <p class="reason">抽泣声非常自然、真实，恰到好处地表达了伤心的情绪，且与前后语音衔接流畅，极大地增强了话语的感染力。</p>
+          </div>
+          <div class="judge">
+            <div class="judge-title"><span>Qwen3-Omni</span><span class="judge-score">5</span></div>
+            <p class="reason">The crying sound is very natural and expressive, effectively conveying sadness and enhancing the emotional weight of the sentence. It is well-timed and integrated into the speech, sounding authentic and not synthetic.</p>
+          </div>
+        </div>
+      </article>
+
+      <article>
+        <div class="expert-row">
+          <div class="expert-score">Expert MOS: 0.0</div>
+          <div class="tag">Target NV: [moan]</div>
+        </div>
+        <audio controls preload="none" src="assets/audio/0_1_02_pred0.59_gem3_mos0.0_gain2.41_moan.wav"></audio>
+        <blockquote>[moan] Why does this bed have to be so unbelievably comfortable?</blockquote>
+        <div class="score-block">
+          <div class="score-label">NVMOS prediction</div>
+          <div class="nvmos-score">0.59</div>
+        </div>
+        <div class="judge-grid">
+          <div class="judge">
+            <div class="judge-title"><span>Gemini 2.5 Pro</span><span class="judge-score">3</span></div>
+            <p class="reason">听到了呻吟声，但声音有些单薄，带有合成感，表现力一般，但基本融入了后续的语音。</p>
+          </div>
+          <div class="judge">
+            <div class="judge-title"><span>Qwen3-Omni</span><span class="judge-score">5</span></div>
+            <p class="reason">The moan is very natural and expressive, sounding like a genuine vocalization of pleasure or relaxation. It is perfectly timed and fits the context of the spoken sentence, enhancing the overall performance.</p>
+          </div>
+        </div>
+      </article>
+
+      <article>
+        <div class="expert-row">
+          <div class="expert-score">Expert MOS: 5.0</div>
+          <div class="tag">Target NV: [ahem]</div>
+        </div>
+        <audio controls preload="none" src="assets/audio/mos5_01_pred4.10_gem2_gain2.10_ahem.mp3"></audio>
+        <blockquote>So, [ahem] if I integrate from t to t plus cap t, I think there is a bracket missing here</blockquote>
+        <div class="score-block">
+          <div class="score-label">NVMOS prediction</div>
+          <div class="nvmos-score">4.10</div>
+        </div>
+        <div class="judge-grid">
+          <div class="judge">
+            <div class="judge-title"><span>Gemini 2.5 Pro</span><span class="judge-score">2</span></div>
+            <p class="reason">听到了清嗓声，但声音听起来很僵硬，有明显的合成感和机械感，听起来不像是自然的人声发声，与前后语音的衔接也不够流畅。</p>
+          </div>
+          <div class="judge">
+            <div class="judge-title"><span>Qwen3-Omni</span><span class="judge-score">4</span></div>
+            <p class="reason">The 'ahem' sound is natural and expressive, fitting well with the context of a speaker preparing to continue a technical explanation. It enhances the realism of the performance without sounding forced or overly synthetic.</p>
+          </div>
+        </div>
+      </article>
+
+      <article>
+        <div class="expert-row">
+          <div class="expert-score">Expert MOS: 4.0</div>
+          <div class="tag">Target NV: [smack]</div>
+        </div>
+        <audio controls preload="none" src="assets/audio/mos4_02_pred3.87_gem1_gain2.87_smack.mp3"></audio>
+        <blockquote>You're probably thinking I'm mad. [smack] But you're right, I am mad</blockquote>
+        <div class="score-block">
+          <div class="score-label">NVMOS prediction</div>
+          <div class="nvmos-score">3.87</div>
+        </div>
+        <div class="judge-grid">
+          <div class="judge">
+            <div class="judge-title"><span>Gemini 2.5 Pro</span><span class="judge-score">1</span></div>
+            <p class="reason">听到的咂嘴声非常不自然，听起来像一个尖锐、短暂的爆破音或音频故障，与前后语音的衔接很突兀，破坏了整体听感。</p>
+          </div>
+          <div class="judge">
+            <div class="judge-title"><span>Qwen3-Omni</span><span class="judge-score">5</span></div>
+            <p class="reason">The [smack] sound is very natural, crisp, and expressive. It enhances the emotional delivery of the line, fitting perfectly with the speaker's tone and the context of being 'mad'. The sound is well-integrated and adds a strong, believable non-verbal cue.</p>
+          </div>
+        </div>
+      </article>
     </section>
   </main>
 </body>
