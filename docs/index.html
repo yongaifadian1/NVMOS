@@ -28,23 +28,48 @@
       background: var(--panel);
       border-bottom: 1px solid var(--line);
     }
-    h1 {
+    .header-inner, main {
       max-width: 1080px;
-      margin: 0 auto 14px;
+      margin: 0 auto;
+    }
+    h1 {
+      margin: 0 0 14px;
       font-size: 32px;
       letter-spacing: 0;
     }
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 0 0 18px;
+    }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 36px;
+      padding: 7px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcfd;
+      color: var(--ink);
+      text-decoration: none;
+      font: inherit;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    .button.active {
+      border-color: var(--accent);
+      background: var(--soft);
+      color: var(--accent);
+      font-weight: 700;
+    }
     .summary {
-      max-width: 1080px;
-      margin: 0 auto;
+      margin: 0;
       color: var(--muted);
       font-size: 16px;
     }
-    main {
-      max-width: 1080px;
-      margin: 0 auto;
-      padding: 30px 24px 42px;
-    }
+    main { padding: 30px 24px 42px; }
     .samples {
       display: flex;
       flex-direction: column;
@@ -70,14 +95,8 @@
       font-weight: 700;
       color: var(--ink);
     }
-    .tag {
-      color: var(--muted);
-      font-size: 15px;
-    }
-    audio {
-      width: 100%;
-      margin: 0 0 18px;
-    }
+    .tag { color: var(--muted); font-size: 15px; }
+    audio { width: 100%; margin: 0 0 18px; }
     blockquote {
       margin: 0 0 24px;
       padding: 14px 16px;
@@ -93,16 +112,8 @@
       background: var(--soft);
       border: 1px solid #cfe5da;
     }
-    .score-label {
-      color: var(--muted);
-      font-size: 14px;
-      margin-bottom: 4px;
-    }
-    .nvmos-score {
-      color: var(--accent);
-      font-size: 24px;
-      font-weight: 700;
-    }
+    .score-label { color: var(--muted); font-size: 14px; margin-bottom: 4px; }
+    .nvmos-score { color: var(--accent); font-size: 24px; font-weight: 700; }
     .judge-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -122,124 +133,132 @@
       margin-bottom: 10px;
       font-weight: 700;
     }
-    .judge-score {
-      color: var(--accent);
-      font-size: 20px;
-    }
-    .reason {
-      margin: 0;
-      color: #384454;
-      font-size: 15px;
-    }
+    .judge-score { color: var(--accent); font-size: 20px; }
+    .reason { margin: 0; color: #384454; font-size: 15px; }
+    [data-lang-panel] { display: none; }
+    [data-lang-panel].active { display: block; }
     @media (max-width: 760px) {
       header { padding: 30px 18px 22px; }
       main { padding: 22px 18px 34px; }
       article { padding: 20px; }
       .expert-row { display: block; }
-      .expert-score { margin-bottom: 6px; }
+      .expert-score { margin-bottom: 6px; font-size: 24px; }
       .judge-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>NVMOS Test-Set Prediction Demo</h1>
-    <p class="summary">Gemini 2.5 Pro achieved the best performance among the evaluated LLM judges, but it still makes clear mistakes compared with expert ratings. Qwen3-Omni tends to assign high scores to nearly all samples, including low-quality NV events.</p>
+    <div class="header-inner">
+      <h1>NVMOS Test-Set Prediction Demo</h1>
+      <div class="actions" aria-label="Page actions">
+        <a class="button" href="https://github.com/yongaifadian1/NVMOS">GitHub Repository</a>
+        <button class="button active" type="button" data-lang-button="en">English</button>
+        <button class="button" type="button" data-lang-button="zh">中文</button>
+      </div>
+      <p class="summary" data-lang-panel="en">Gemini 2.5 Pro achieved the best performance among the evaluated LLM judges, but it still makes clear mistakes compared with expert ratings. Qwen3-Omni tends to assign high scores to nearly all samples, including low-quality NV events.</p>
+      <p class="summary" data-lang-panel="zh">Gemini 2.5 Pro 在评测的大模型 judge 中表现最好，但与专家评分相比仍存在明显误判。Qwen3-Omni 则倾向于给几乎所有样本较高分数，包括低质量 NV 事件。</p>
+    </div>
   </header>
+
   <main>
-    <section class="samples" aria-label="NVMOS and LLM judge comparison samples">
+    <section class="samples" aria-label="NVMOS and LLM judge comparison samples" data-lang-panel="en">
       <article>
-        <div class="expert-row">
-          <div class="expert-score">Expert MOS: 1.0</div>
-          <div class="tag">Target NV: [cry]</div>
-        </div>
+        <div class="expert-row"><div class="expert-score">Expert MOS: 1.0</div><div class="tag">Target NV: [cry]</div></div>
         <audio controls preload="none" src="assets/audio/0_1_01_pred0.82_gem5_mos1.0_gain3.82_cry.wav"></audio>
         <blockquote>这个玩偶坏了 [cry] 那是奶奶留给我的</blockquote>
-        <div class="score-block">
-          <div class="score-label">NVMOS prediction</div>
-          <div class="nvmos-score">0.82</div>
-        </div>
+        <div class="score-block"><div class="score-label">NVMOS prediction</div><div class="nvmos-score">0.82</div></div>
         <div class="judge-grid">
-          <div class="judge">
-            <div class="judge-title"><span>Gemini 2.5 Pro</span><span class="judge-score">5</span></div>
-            <p class="reason">抽泣声非常自然、真实，恰到好处地表达了伤心的情绪，且与前后语音衔接流畅，极大地增强了话语的感染力。</p>
-          </div>
-          <div class="judge">
-            <div class="judge-title"><span>Qwen3-Omni</span><span class="judge-score">5</span></div>
-            <p class="reason">The crying sound is very natural and expressive, effectively conveying sadness and enhancing the emotional weight of the sentence. It is well-timed and integrated into the speech, sounding authentic and not synthetic.</p>
-          </div>
+          <div class="judge"><div class="judge-title"><span>Gemini 2.5 Pro</span><span class="judge-score">5</span></div><p class="reason">抽泣声非常自然、真实，恰到好处地表达了伤心的情绪，且与前后语音衔接流畅，极大地增强了话语的感染力。</p></div>
+          <div class="judge"><div class="judge-title"><span>Qwen3-Omni</span><span class="judge-score">5</span></div><p class="reason">The crying sound is very natural and expressive, effectively conveying sadness and enhancing the emotional weight of the sentence. It is well-timed and integrated into the speech, sounding authentic and not synthetic.</p></div>
         </div>
       </article>
-
       <article>
-        <div class="expert-row">
-          <div class="expert-score">Expert MOS: 0.0</div>
-          <div class="tag">Target NV: [moan]</div>
-        </div>
+        <div class="expert-row"><div class="expert-score">Expert MOS: 0.0</div><div class="tag">Target NV: [moan]</div></div>
         <audio controls preload="none" src="assets/audio/0_1_02_pred0.59_gem3_mos0.0_gain2.41_moan.wav"></audio>
         <blockquote>[moan] Why does this bed have to be so unbelievably comfortable?</blockquote>
-        <div class="score-block">
-          <div class="score-label">NVMOS prediction</div>
-          <div class="nvmos-score">0.59</div>
-        </div>
+        <div class="score-block"><div class="score-label">NVMOS prediction</div><div class="nvmos-score">0.59</div></div>
         <div class="judge-grid">
-          <div class="judge">
-            <div class="judge-title"><span>Gemini 2.5 Pro</span><span class="judge-score">3</span></div>
-            <p class="reason">听到了呻吟声，但声音有些单薄，带有合成感，表现力一般，但基本融入了后续的语音。</p>
-          </div>
-          <div class="judge">
-            <div class="judge-title"><span>Qwen3-Omni</span><span class="judge-score">5</span></div>
-            <p class="reason">The moan is very natural and expressive, sounding like a genuine vocalization of pleasure or relaxation. It is perfectly timed and fits the context of the spoken sentence, enhancing the overall performance.</p>
-          </div>
+          <div class="judge"><div class="judge-title"><span>Gemini 2.5 Pro</span><span class="judge-score">3</span></div><p class="reason">听到了呻吟声，但声音有些单薄，带有合成感，表现力一般，但基本融入了后续的语音。</p></div>
+          <div class="judge"><div class="judge-title"><span>Qwen3-Omni</span><span class="judge-score">5</span></div><p class="reason">The moan is very natural and expressive, sounding like a genuine vocalization of pleasure or relaxation. It is perfectly timed and fits the context of the spoken sentence, enhancing the overall performance.</p></div>
         </div>
       </article>
-
       <article>
-        <div class="expert-row">
-          <div class="expert-score">Expert MOS: 5.0</div>
-          <div class="tag">Target NV: [ahem]</div>
-        </div>
+        <div class="expert-row"><div class="expert-score">Expert MOS: 5.0</div><div class="tag">Target NV: [ahem]</div></div>
         <audio controls preload="none" src="assets/audio/mos5_01_pred4.10_gem2_gain2.10_ahem.mp3"></audio>
         <blockquote>So, [ahem] if I integrate from t to t plus cap t, I think there is a bracket missing here</blockquote>
-        <div class="score-block">
-          <div class="score-label">NVMOS prediction</div>
-          <div class="nvmos-score">4.10</div>
-        </div>
+        <div class="score-block"><div class="score-label">NVMOS prediction</div><div class="nvmos-score">4.10</div></div>
         <div class="judge-grid">
-          <div class="judge">
-            <div class="judge-title"><span>Gemini 2.5 Pro</span><span class="judge-score">2</span></div>
-            <p class="reason">听到了清嗓声，但声音听起来很僵硬，有明显的合成感和机械感，听起来不像是自然的人声发声，与前后语音的衔接也不够流畅。</p>
-          </div>
-          <div class="judge">
-            <div class="judge-title"><span>Qwen3-Omni</span><span class="judge-score">4</span></div>
-            <p class="reason">The 'ahem' sound is natural and expressive, fitting well with the context of a speaker preparing to continue a technical explanation. It enhances the realism of the performance without sounding forced or overly synthetic.</p>
-          </div>
+          <div class="judge"><div class="judge-title"><span>Gemini 2.5 Pro</span><span class="judge-score">2</span></div><p class="reason">听到了清嗓声，但声音听起来很僵硬，有明显的合成感和机械感，听起来不像是自然的人声发声，与前后语音的衔接也不够流畅。</p></div>
+          <div class="judge"><div class="judge-title"><span>Qwen3-Omni</span><span class="judge-score">4</span></div><p class="reason">The 'ahem' sound is natural and expressive, fitting well with the context of a speaker preparing to continue a technical explanation. It enhances the realism of the performance without sounding forced or overly synthetic.</p></div>
         </div>
       </article>
-
       <article>
-        <div class="expert-row">
-          <div class="expert-score">Expert MOS: 4.0</div>
-          <div class="tag">Target NV: [smack]</div>
-        </div>
+        <div class="expert-row"><div class="expert-score">Expert MOS: 4.0</div><div class="tag">Target NV: [smack]</div></div>
         <audio controls preload="none" src="assets/audio/mos4_02_pred3.87_gem1_gain2.87_smack.mp3"></audio>
         <blockquote>You're probably thinking I'm mad. [smack] But you're right, I am mad</blockquote>
-        <div class="score-block">
-          <div class="score-label">NVMOS prediction</div>
-          <div class="nvmos-score">3.87</div>
-        </div>
+        <div class="score-block"><div class="score-label">NVMOS prediction</div><div class="nvmos-score">3.87</div></div>
         <div class="judge-grid">
-          <div class="judge">
-            <div class="judge-title"><span>Gemini 2.5 Pro</span><span class="judge-score">1</span></div>
-            <p class="reason">听到的咂嘴声非常不自然，听起来像一个尖锐、短暂的爆破音或音频故障，与前后语音的衔接很突兀，破坏了整体听感。</p>
-          </div>
-          <div class="judge">
-            <div class="judge-title"><span>Qwen3-Omni</span><span class="judge-score">5</span></div>
-            <p class="reason">The [smack] sound is very natural, crisp, and expressive. It enhances the emotional delivery of the line, fitting perfectly with the speaker's tone and the context of being 'mad'. The sound is well-integrated and adds a strong, believable non-verbal cue.</p>
-          </div>
+          <div class="judge"><div class="judge-title"><span>Gemini 2.5 Pro</span><span class="judge-score">1</span></div><p class="reason">听到的咂嘴声非常不自然，听起来像一个尖锐、短暂的爆破音或音频故障，与前后语音的衔接很突兀，破坏了整体听感。</p></div>
+          <div class="judge"><div class="judge-title"><span>Qwen3-Omni</span><span class="judge-score">5</span></div><p class="reason">The [smack] sound is very natural, crisp, and expressive. It enhances the emotional delivery of the line, fitting perfectly with the speaker's tone and the context of being 'mad'. The sound is well-integrated and adds a strong, believable non-verbal cue.</p></div>
+        </div>
+      </article>
+    </section>
+
+    <section class="samples" aria-label="NVMOS 与大模型 judge 对比样本" data-lang-panel="zh">
+      <article>
+        <div class="expert-row"><div class="expert-score">专家 MOS：1.0</div><div class="tag">目标 NV：[cry]</div></div>
+        <audio controls preload="none" src="assets/audio/0_1_01_pred0.82_gem5_mos1.0_gain3.82_cry.wav"></audio>
+        <blockquote>这个玩偶坏了 [cry] 那是奶奶留给我的</blockquote>
+        <div class="score-block"><div class="score-label">NVMOS 预测分数</div><div class="nvmos-score">0.82</div></div>
+        <div class="judge-grid">
+          <div class="judge"><div class="judge-title"><span>Gemini 2.5 Pro</span><span class="judge-score">5</span></div><p class="reason">抽泣声非常自然、真实，恰到好处地表达了伤心的情绪，且与前后语音衔接流畅，极大地增强了话语的感染力。</p></div>
+          <div class="judge"><div class="judge-title"><span>Qwen3-Omni</span><span class="judge-score">5</span></div><p class="reason">模型认为哭声非常自然且有表现力，能有效表达悲伤情绪，并增强句子的情感重量；同时认为它时机合适、与语音融合自然、听起来不像合成音。</p></div>
+        </div>
+      </article>
+      <article>
+        <div class="expert-row"><div class="expert-score">专家 MOS：0.0</div><div class="tag">目标 NV：[moan]</div></div>
+        <audio controls preload="none" src="assets/audio/0_1_02_pred0.59_gem3_mos0.0_gain2.41_moan.wav"></audio>
+        <blockquote>[moan] Why does this bed have to be so unbelievably comfortable?</blockquote>
+        <div class="score-block"><div class="score-label">NVMOS 预测分数</div><div class="nvmos-score">0.59</div></div>
+        <div class="judge-grid">
+          <div class="judge"><div class="judge-title"><span>Gemini 2.5 Pro</span><span class="judge-score">3</span></div><p class="reason">听到了呻吟声，但声音有些单薄，带有合成感，表现力一般，但基本融入了后续的语音。</p></div>
+          <div class="judge"><div class="judge-title"><span>Qwen3-Omni</span><span class="judge-score">5</span></div><p class="reason">模型认为呻吟声非常自然且有表现力，像真实的放松或愉悦发声；同时认为其时机完美、符合文本语境，并增强了整体表现。</p></div>
+        </div>
+      </article>
+      <article>
+        <div class="expert-row"><div class="expert-score">专家 MOS：5.0</div><div class="tag">目标 NV：[ahem]</div></div>
+        <audio controls preload="none" src="assets/audio/mos5_01_pred4.10_gem2_gain2.10_ahem.mp3"></audio>
+        <blockquote>So, [ahem] if I integrate from t to t plus cap t, I think there is a bracket missing here</blockquote>
+        <div class="score-block"><div class="score-label">NVMOS 预测分数</div><div class="nvmos-score">4.10</div></div>
+        <div class="judge-grid">
+          <div class="judge"><div class="judge-title"><span>Gemini 2.5 Pro</span><span class="judge-score">2</span></div><p class="reason">听到了清嗓声，但声音听起来很僵硬，有明显的合成感和机械感，听起来不像是自然的人声发声，与前后语音的衔接也不够流畅。</p></div>
+          <div class="judge"><div class="judge-title"><span>Qwen3-Omni</span><span class="judge-score">4</span></div><p class="reason">模型认为清嗓声自然且有表现力，符合说话者准备继续技术讲解的语境，并增强了真实感，没有显得过于刻意或合成。</p></div>
+        </div>
+      </article>
+      <article>
+        <div class="expert-row"><div class="expert-score">专家 MOS：4.0</div><div class="tag">目标 NV：[smack]</div></div>
+        <audio controls preload="none" src="assets/audio/mos4_02_pred3.87_gem1_gain2.87_smack.mp3"></audio>
+        <blockquote>You're probably thinking I'm mad. [smack] But you're right, I am mad</blockquote>
+        <div class="score-block"><div class="score-label">NVMOS 预测分数</div><div class="nvmos-score">3.87</div></div>
+        <div class="judge-grid">
+          <div class="judge"><div class="judge-title"><span>Gemini 2.5 Pro</span><span class="judge-score">1</span></div><p class="reason">听到的咂嘴声非常不自然，听起来像一个尖锐、短暂的爆破音或音频故障，与前后语音的衔接很突兀，破坏了整体听感。</p></div>
+          <div class="judge"><div class="judge-title"><span>Qwen3-Omni</span><span class="judge-score">5</span></div><p class="reason">模型认为咂嘴声非常自然、清脆且有表现力，增强了台词中的情绪表达，并与说话者语气和“生气”的语境高度匹配。</p></div>
         </div>
       </article>
     </section>
   </main>
+
+  <script>
+    const buttons = document.querySelectorAll('[data-lang-button]');
+    const panels = document.querySelectorAll('[data-lang-panel]');
+    function setLanguage(lang) {
+      panels.forEach((panel) => panel.classList.toggle('active', panel.dataset.langPanel === lang));
+      buttons.forEach((button) => button.classList.toggle('active', button.dataset.langButton === lang));
+      document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+    }
+    buttons.forEach((button) => button.addEventListener('click', () => setLanguage(button.dataset.langButton)));
+    setLanguage('en');
+  </script>
 </body>
 </html>
