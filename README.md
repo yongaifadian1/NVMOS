@@ -69,12 +69,12 @@ python infer.py \
   --text "$(cat examples/example_high_ahem_pred4.10.txt)"
 ```
 
-Then run prediction with your own audio file and the corresponding text. The text must contain exactly one NV tag at its actual position:
+Then run prediction with your own audio file and the corresponding text. The text must be provided inline and contain exactly one NV tag at its actual position:
 
 ```bash
 python infer.py \
   --audio /path/to/your_audio.wav \
-  --text "I tried to explain the situation, but honestly it was just too awkward. [laugh]"
+  --text "<your text with exactly one NV tag, e.g., [laugh]>"
 ```
 
 Example output:
@@ -84,7 +84,7 @@ Example output:
   "score": 3.72,
   "raw_score": 3.72,
   "target_tag": "laugh",
-  "text": "I tried to explain the situation, but honestly it was just too awkward. [laugh]",
+  "text": "<your text with exactly one NV tag>",
   "audio_path": "/path/to/audio.wav",
   "audio_frames": 248,
   "attention_peak_frame": 137
@@ -172,12 +172,12 @@ python infer.py \
   --text "$(cat examples/example_high_ahem_pred4.10.txt)"
 ```
 
-然后再替换为自己的音频和对应文本进行评估。文本中必须在实际位置包含且只包含一个 NV 标签：
+然后再替换为自己的音频和对应文本进行评估。文本需要以内联命令行参数传入，并且必须在实际位置包含且只包含一个 NV 标签：
 
 ```bash
 python infer.py \
   --audio /path/to/your_audio.wav \
-  --text "I tried to explain the situation, but honestly it was just too awkward. [laugh]"
+  --text "<your text with exactly one NV tag, e.g., [laugh]>"
 ```
 
 输出示例：
@@ -187,7 +187,7 @@ python infer.py \
   "score": 3.72,
   "raw_score": 3.72,
   "target_tag": "laugh",
-  "text": "I tried to explain the situation, but honestly it was just too awkward. [laugh]",
+  "text": "<your text with exactly one NV tag>",
   "audio_path": "/path/to/audio.wav",
   "audio_frames": 248,
   "attention_peak_frame": 137
