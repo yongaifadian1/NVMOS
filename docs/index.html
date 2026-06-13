@@ -38,18 +38,8 @@
       font-size: 32px;
       letter-spacing: 0;
     }
-    header p {
-      max-width: 1120px;
-      margin: 0 auto;
-      color: var(--muted);
-    }
-    section {
-      margin: 0 0 28px;
-    }
-    h2 {
-      font-size: 20px;
-      margin: 0 0 12px;
-    }
+    section { margin: 0 0 28px; }
+    h2 { font-size: 20px; margin: 0 0 12px; }
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -75,14 +65,8 @@
       padding: 2px 8px;
       background: #fafbfc;
     }
-    .pred {
-      color: var(--accent);
-      font-weight: 650;
-    }
-    audio {
-      width: 100%;
-      margin: 4px 0 12px;
-    }
+    .pred { color: var(--accent); font-weight: 650; }
+    audio { width: 100%; margin: 4px 0 12px; }
     blockquote {
       margin: 0;
       padding: 10px 12px;
@@ -90,9 +74,18 @@
       background: #f8faf9;
       color: #2d3742;
     }
-    code {
-      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
-      font-size: 0.95em;
+    .judge {
+      margin: 10px 0 0;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcfd;
+      font-size: 14px;
+    }
+    .judge strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--ink);
     }
   </style>
 </head>
@@ -102,81 +95,35 @@
   </header>
   <main>
     <section>
-      <h2>Prediction score 0-1</h2>
+      <h2>NVMOS and LLM Judge Comparison</h2>
       <div class="grid">
         <article>
-          <div class="meta"><span class="pill">Tag: cough</span><span class="pill pred">NVMOS: 0.63</span></div>
-          <audio controls preload="none" src="assets/audio/score_0_1_01_cough_pred0.63_mos0.0.mp3"></audio>
-          <blockquote>Think about it and come back if you want. I'll be waiting upstairs in the reception. [cough] Understood</blockquote>
+          <div class="meta"><span class="pill">Tag: cry</span><span class="pill pred">NVMOS: 0.82</span><span class="pill">Expert MOS: 1.0</span><span class="pill">Gemini 2.5 Pro: 5</span><span class="pill">Qwen3-Omni: 5</span></div>
+          <audio controls preload="none" src="assets/audio/0_1_01_pred0.82_gem5_mos1.0_gain3.82_cry.wav"></audio>
+          <blockquote>这个玩偶坏了 [cry] 那是奶奶留给我的</blockquote>
+          <div class="judge"><strong>Gemini 2.5 Pro reason</strong>抽泣声非常自然、真实，恰到好处地表达了伤心的情绪，且与前后语音衔接流畅，极大地增强了话语的感染力。</div>
+          <div class="judge"><strong>Qwen3-Omni reason</strong>The crying sound is very natural and expressive, effectively conveying sadness and enhancing the emotional weight of the sentence. It is well-timed and integrated into the speech, sounding authentic and not synthetic.</div>
         </article>
         <article>
-          <div class="meta"><span class="pill">Tag: sigh</span><span class="pill pred">NVMOS: 0.10</span></div>
-          <audio controls preload="none" src="assets/audio/score_0_1_02_sigh_pred0.10_mos0.0.wav"></audio>
-          <blockquote>Another rainy day ruined our plans to go to the beach. [sigh]</blockquote>
-        </article>
-      </div>
-    </section>
-
-    <section>
-      <h2>Prediction score 1-2</h2>
-      <div class="grid">
-        <article>
-          <div class="meta"><span class="pill">Tag: laugh</span><span class="pill pred">NVMOS: 2.00</span></div>
-          <audio controls preload="none" src="assets/audio/score_1_2_01_laugh_pred2.00_mos0.0.wav"></audio>
-          <blockquote>We got completely lost in the woods for two hours, [laugh] but at least the weather was nice.</blockquote>
+          <div class="meta"><span class="pill">Tag: moan</span><span class="pill pred">NVMOS: 0.59</span><span class="pill">Expert MOS: 0.0</span><span class="pill">Gemini 2.5 Pro: 3</span><span class="pill">Qwen3-Omni: 5</span></div>
+          <audio controls preload="none" src="assets/audio/0_1_02_pred0.59_gem3_mos0.0_gain2.41_moan.wav"></audio>
+          <blockquote>[moan] Why does this bed have to be so unbelievably comfortable?</blockquote>
+          <div class="judge"><strong>Gemini 2.5 Pro reason</strong>听到了呻吟声，但声音有些单薄，带有合成感，表现力一般，但基本融入了后续的语音。</div>
+          <div class="judge"><strong>Qwen3-Omni reason</strong>The moan is very natural and expressive, sounding like a genuine vocalization of pleasure or relaxation. It is perfectly timed and fits the context of the spoken sentence, enhancing the overall performance.</div>
         </article>
         <article>
-          <div class="meta"><span class="pill">Tag: inhale</span><span class="pill pred">NVMOS: 1.24</span></div>
-          <audio controls preload="none" src="assets/audio/score_1_2_02_inhale_pred1.24_mos1.0.wav"></audio>
-          <blockquote>[inhale] I didn't expect to see you standing right there when I opened the door.</blockquote>
-        </article>
-      </div>
-    </section>
-
-    <section>
-      <h2>Prediction score 2-3</h2>
-      <div class="grid">
-        <article>
-          <div class="meta"><span class="pill">Tag: moan</span><span class="pill pred">NVMOS: 2.06</span></div>
-          <audio controls preload="none" src="assets/audio/score_2_3_01_moan_pred2.06_mos3.0.wav"></audio>
-          <blockquote>I shouldn't have drunk so much wine at the party last night. [moan]</blockquote>
+          <div class="meta"><span class="pill">Tag: ahem</span><span class="pill pred">NVMOS: 4.10</span><span class="pill">Expert MOS: 5.0</span><span class="pill">Gemini 2.5 Pro: 2</span><span class="pill">Qwen3-Omni: 4</span></div>
+          <audio controls preload="none" src="assets/audio/mos5_01_pred4.10_gem2_gain2.10_ahem.mp3"></audio>
+          <blockquote>So, [ahem] if I integrate from t to t plus cap t, I think there is a bracket missing here</blockquote>
+          <div class="judge"><strong>Gemini 2.5 Pro reason</strong>听到了清嗓声，但声音听起来很僵硬，有明显的合成感和机械感，听起来不像是自然的人声发声，与前后语音的衔接也不够流畅。</div>
+          <div class="judge"><strong>Qwen3-Omni reason</strong>The 'ahem' sound is natural and expressive, fitting well with the context of a speaker preparing to continue a technical explanation. It enhances the realism of the performance without sounding forced or overly synthetic.</div>
         </article>
         <article>
-          <div class="meta"><span class="pill">Tag: hum</span><span class="pill pred">NVMOS: 2.92</span></div>
-          <audio controls preload="none" src="assets/audio/score_2_3_02_hum_pred2.92_mos3.0.wav"></audio>
-          <blockquote>Organizing the garage took much longer than I initially expected. [hum]</blockquote>
-        </article>
-      </div>
-    </section>
-
-    <section>
-      <h2>Prediction score 3-4</h2>
-      <div class="grid">
-        <article>
-          <div class="meta"><span class="pill">Tag: hiss</span><span class="pill pred">NVMOS: 3.10</span></div>
-          <audio controls preload="none" src="assets/audio/score_3_4_01_hiss_pred3.10_mos4.0.wav"></audio>
-          <blockquote>We need to be completely silent so they don't notice us, [hiss]</blockquote>
-        </article>
-        <article>
-          <div class="meta"><span class="pill">Tag: ahem</span><span class="pill pred">NVMOS: 3.66</span></div>
-          <audio controls preload="none" src="assets/audio/score_3_4_02_ahem_pred3.66_mos3.0.wav"></audio>
-          <blockquote>To address the elephant in the room, [ahem] yes, the rumors about the merger are true.</blockquote>
-        </article>
-      </div>
-    </section>
-
-    <section>
-      <h2>Prediction score 4-5</h2>
-      <div class="grid">
-        <article>
-          <div class="meta"><span class="pill">Tag: cough</span><span class="pill pred">NVMOS: 4.15</span></div>
-          <audio controls preload="none" src="assets/audio/score_4_5_01_cough_pred4.15_mos4.0.wav"></audio>
-          <blockquote>I hate it when the weather changes and makes my chest feel tight [cough]</blockquote>
-        </article>
-        <article>
-          <div class="meta"><span class="pill">Tag: sigh</span><span class="pill pred">NVMOS: 4.01</span></div>
-          <audio controls preload="none" src="assets/audio/score_4_5_02_sigh_pred4.01_mos5.0.wav"></audio>
-          <blockquote>[sigh] 我早就跟你说过这样行不通，你偏不听，现在好了吧。</blockquote>
+          <div class="meta"><span class="pill">Tag: smack</span><span class="pill pred">NVMOS: 3.87</span><span class="pill">Expert MOS: 4.0</span><span class="pill">Gemini 2.5 Pro: 1</span><span class="pill">Qwen3-Omni: 5</span></div>
+          <audio controls preload="none" src="assets/audio/mos4_02_pred3.87_gem1_gain2.87_smack.mp3"></audio>
+          <blockquote>You're probably thinking I'm mad. [smack] But you're right, I am mad</blockquote>
+          <div class="judge"><strong>Gemini 2.5 Pro reason</strong>听到的咂嘴声非常不自然，听起来像一个尖锐、短暂的爆破音或音频故障，与前后语音的衔接很突兀，破坏了整体听感。</div>
+          <div class="judge"><strong>Qwen3-Omni reason</strong>The [smack] sound is very natural, crisp, and expressive. It enhances the emotional delivery of the line, fitting perfectly with the speaker's tone and the context of being 'mad'. The sound is well-integrated and adds a strong, believable non-verbal cue.</div>
         </article>
       </div>
     </section>
