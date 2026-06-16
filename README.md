@@ -2,6 +2,7 @@
 
 <p>
   <a href="https://huggingface.co/maimai11/NVMOS"><img src="https://img.shields.io/badge/Hugging%20Face-NVMOS-yellow" alt="Hugging Face"></a>
+  <a href="https://arxiv.org/abs/2606.15888"><img src="https://img.shields.io/badge/arXiv-2606.15888-b31b1b" alt="arXiv"></a>
   <a href="https://yongaifadian1.github.io/NVMOS/"><img src="https://img.shields.io/badge/Demo-Page-green" alt="Demo Page"></a>
   <a href="#english"><img src="https://img.shields.io/badge/Language-English-blue" alt="English"></a>
   <a href="#chinese"><img src="https://img.shields.io/badge/Language-%E4%B8%AD%E6%96%87-red" alt="中文"></a>
@@ -11,7 +12,7 @@
 
 NVMOS predicts the perceptual quality of a target non-verbal vocalization (NV) in speech. The input is an audio file and its text containing one explicit NV tag such as `[laugh]`, `[sigh]`, or `[cough]`. The output is a MOS-like quality score in the range 0-5 for the marked NV event.
 
-This repository contains inference code for the released SPEAR-L9 NVMOS model. The scorer weights are hosted on Hugging Face at [`maimai11/NVMOS`](https://huggingface.co/maimai11/NVMOS).
+This repository contains inference code for the released SPEAR-L9 NVMOS model. The scorer weights are hosted on Hugging Face at [`maimai11/NVMOS`](https://huggingface.co/maimai11/NVMOS). See the paper: [NVMOS: Non-Verbal Vocalization Quality Assessment in Speech](https://arxiv.org/abs/2606.15888).
 
 ## Model
 
@@ -100,6 +101,19 @@ Example output:
 
 If you use NVMOS, please cite the corresponding paper and model release.
 
+```bibtex
+@misc{mai2026nvmos,
+  title={NVMOS: Non-Verbal Vocalization Quality Assessment in Speech},
+  author={Mai, Jialong and Ji, Jinxin and Xing, Xiaofen and Liu, Wencui and Xu, Xiangmin},
+  year={2026},
+  eprint={2606.15888},
+  archivePrefix={arXiv},
+  primaryClass={cs.SD},
+  doi={10.48550/arXiv.2606.15888},
+  url={https://arxiv.org/abs/2606.15888}
+}
+```
+
 ---
 
 <a id="chinese"></a>
@@ -109,12 +123,13 @@ If you use NVMOS, please cite the corresponding paper and model release.
 <p>
   <a href="#english"><img src="https://img.shields.io/badge/Language-English-blue" alt="English"></a>
   <a href="https://huggingface.co/maimai11/NVMOS"><img src="https://img.shields.io/badge/Hugging%20Face-NVMOS-yellow" alt="Hugging Face"></a>
+  <a href="https://arxiv.org/abs/2606.15888"><img src="https://img.shields.io/badge/arXiv-2606.15888-b31b1b" alt="arXiv"></a>
   <a href="https://yongaifadian1.github.io/NVMOS/"><img src="https://img.shields.io/badge/Demo-%E9%A1%B5%E9%9D%A2-green" alt="Demo 页面"></a>
 </p>
 
 NVMOS 用于预测语音中目标非语言发声事件（non-verbal vocalization, NV）的感知质量。输入是一段音频及其对应文本，文本中需要包含一个显式 NV 标签，例如 `[laugh]`、`[sigh]` 或 `[cough]`。输出是针对该标记 NV 事件的 0-5 分 MOS 风格质量分数。
 
-本仓库提供基于 SPEAR 第 9 层特征的 NVMOS 推理代码。评分器权重发布在 Hugging Face：[`maimai11/NVMOS`](https://huggingface.co/maimai11/NVMOS)。
+本仓库提供基于 SPEAR 第 9 层特征的 NVMOS 推理代码。评分器权重发布在 Hugging Face：[`maimai11/NVMOS`](https://huggingface.co/maimai11/NVMOS)。论文链接：[NVMOS: Non-Verbal Vocalization Quality Assessment in Speech](https://arxiv.org/abs/2606.15888)。
 
 ## 模型
 
@@ -202,3 +217,16 @@ python infer.py \
 ## 引用
 
 如果使用 NVMOS，请引用对应论文和模型发布。
+
+```bibtex
+@misc{mai2026nvmos,
+  title={NVMOS: Non-Verbal Vocalization Quality Assessment in Speech},
+  author={Mai, Jialong and Ji, Jinxin and Xing, Xiaofen and Liu, Wencui and Xu, Xiangmin},
+  year={2026},
+  eprint={2606.15888},
+  archivePrefix={arXiv},
+  primaryClass={cs.SD},
+  doi={10.48550/arXiv.2606.15888},
+  url={https://arxiv.org/abs/2606.15888}
+}
+```
